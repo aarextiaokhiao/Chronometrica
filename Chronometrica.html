@@ -1,0 +1,50 @@
+<html><head><title>The Chronometrica</title>
+<style>
+.symbol {
+	font-size: 100px;
+}
+.txt1 {
+	font-size: 50px;
+}
+.txt2 {
+	font-style: italic;
+	font-size: 25px;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+	color: white;
+	text-shadow: 5px 5px black;
+}
+body {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	background: repeating-linear-gradient(22deg, black, #444444, black 200px);
+}
+</style>
+</head>
+<body><div class="content">
+<span class="txt1">The Chronometrica</span>
+<br>
+<span class="symbol">~[⏱️]~</span>
+<br>
+<span class="txt1" id="abm">Abmetric Index here</span>
+<br>
+<span class="txt2" id="day">Days since Feb. 16, 2026 here</span>
+</div>
+<script>
+function day() {
+return Date.now()/86400000-20500;
+}
+function abm() {
+return 3*((23/3)**(1/365))**day();
+}
+function update() {
+document.getElementById('day').innerHTML = 'Days since 2/16/26 in UTC: ' + day()
+document.getElementById('abm').innerHTML = `Abmetric Index [${abm()}]`
+}
+setInterval(() => update(), 1)
+</script>
+</body></html>
