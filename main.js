@@ -1,7 +1,6 @@
 /* TIME */
-let startTime = Date.now()/86400000
 function day() {
-	return Date.now()/86400000-startTime+Math.log(22/3)/Math.log(23/3)*365
+	return Date.now()/86400000-20500
 }
 function daytotimestamp(d) {
 	const D = Math.floor(d)
@@ -30,7 +29,7 @@ function updateFocusedElement(html, data) {
 		${data[0]} - ${data[1]}
 		<div class='txt3'>[${data[2]}]</div>
 	`
-	if (data.length == 4) text += `<br>Equivalents: ${data[3].map((a) => a.join(' - ')).join('<br>')}`
+	//if (data.length == 4) text += `<br>Equivalents: ${data[3].map((a) => a.join(' - ')).join('<br>')}`
 	
 	document.getElementById(html).innerHTML = text
 }
