@@ -14,26 +14,79 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-	color: white;
-	text-shadow: 5px 5px black;
 }
-body {
+.centraldiv {
 	display: flex;
     justify-content: center;
     align-items: center;
+	width: 100%;
+	height: 90%;
+}
+.bar {
+	height: 10%;
+}
+body {
+	margin: 0;
+	overflow: hidden;
 	background: repeating-linear-gradient(22deg, black, #444444, black 200px);
+}
+#outerbar {
+    background: #ff000080;
+    height: 10%;
+    position: absolute;
+}
+#innerbar {
+	display: flex;
+	position: relative;
+	height: 100%;
+	align-content: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	font-size: 50px;
+}
+.entries {
+	height: 0;
+	display: flex;
+}
+#lentry, #rentry {
+	display: flex;
+	width: 50%;
+	font-size: 32px;
+}
+#lentry {
+	justify-content: flex-start;
+}
+#rentry {
+	justify-content: flex-end;
+	text-align: right;
+}
+span {
+	color: white;
+	text-shadow: 5px 5px black;
 }
 </style>
 </head>
-<body><div class="content">
+<body>
+<div class="entries">
+<span id="lentry">Left</span>
+<span id="rentry">Right</span>
+</div>
+<div class="centraldiv"><div class="content">
 <span class="txt1">The Chronometrica</span>
 <br>
 <span class="symbol">~[⏱️]~</span>
 <br>
-<span class="txt1" id="abm">Abmetric Index here</span>
+<span class="txt1" id="abm">Abmetric Index...</span>
 <br>
-<span class="txt2" id="day">Days since Feb. 16, 2026 here</span>
+<span class="txt2" id="day">Days since 2/16/26 in UTC...</span>
+<br>
+<span class="txt2" id="next">Next entry in...</span>
+</div></div>
+<div class="bar">
+<div id="outerbar" style="width: 50%;"></div>
+<span id="innerbar">Percentage...</span>
 </div>
+<script src="numarray.js"></script>
 <script>
 function day() {
 return Date.now()/86400000-20500;
@@ -41,10 +94,49 @@ return Date.now()/86400000-20500;
 function abm() {
 return 3*((23/3)**(1/365))**day();
 }
-function update() {
-document.getElementById('day').innerHTML = 'Days since 2/16/26 in UTC: ' + day().toPrecision(10).padEnd(10,"0")
-document.getElementById('abm').innerHTML = `Abmetric Index [${abm().toPrecision(10).padEnd(10,"0")}]`
+function abmtoday(a) {return Math.log(a/3)/Math.log((23/3)**(1/365))}
+function daytotimestamp(d) {
+const D = Math.floor(d)
+const h = 24 * (d - D)
+const H = Math.floor(h).toString().padStart(2,0)
+const m = 60 * (h - H)
+const M = Math.floor(m).toString().padStart(2,0)
+const s = 60 * (m - M)
+const S = s.toFixed(3).padStart(6,0).padEnd(3,0)
+return D + ':' + H + ':' + M + ":" + S
 }
+function updateFocusedPart() {
+const focusedIndex = numarray.findIndex((element) => (element[2] >= abm()));
+return [numarray[focusedIndex-1], numarray[focusedIndex]];
+}
+function updateFocusedElements() {
+if (focusedPart[0].length == 4) {
+document.getElementById('lentry').innerHTML = `${focusedPart[0][0]} - ${focusedPart[0][1]}: [${focusedPart[0][2]}]<br>Equivalents: ${focusedPart[0][3].map((a) => a.join(' - ')).join('<br>')}`
+} else {
+document.getElementById('lentry').innerHTML = `${focusedPart[0][0]} - ${focusedPart[0][1]}: [${focusedPart[0][2]}]`
+}
+if (focusedPart[1].length == 4) {
+document.getElementById('rentry').innerHTML = `${focusedPart[1][0]} - ${focusedPart[1][1]}: [${focusedPart[1][2]}]<br>Equivalents: ${focusedPart[1][3].map((a) => a.join(' - ')).join('<br>')}`
+} else {
+document.getElementById('rentry').innerHTML = `${focusedPart[1][0]} - ${focusedPart[1][1]}: [${focusedPart[1][2]}]`
+}}
+focusedPart = updateFocusedPart();
+updateFocusedElements();
+console.log(focusedPart);
+function percentToNext() {
+return ((1-(focusedPart[1][2]-abm())/(focusedPart[1][2]-focusedPart[0][2]))*100).toPrecision(7).padEnd(7,0) + '%';
+}
+function update() {
+document.getElementById('day').innerHTML = 'Days since 2/16/26 in UTC: ' + day().toPrecision(10).padEnd(10,0)
+document.getElementById('abm').innerHTML = `Abmetric Index [${abm().toPrecision(10).padEnd(10,0)}]`
+document.getElementById('next').innerHTML = 'Next entry in ' + daytotimestamp(abmtoday(focusedPart[1][2]) - day())
+document.getElementById('innerbar').innerHTML = percentToNext();
+document.getElementById('outerbar').setAttribute("style", 'width:' + percentToNext());
+if (abm() >= focusedPart[1][2]) {
+	focusedPart = updateFocusedPart();
+	updateFocusedElements();
+	console.log('focused part updated');
+}}
 setInterval(() => update(), 1)
 </script>
 </body></html>
