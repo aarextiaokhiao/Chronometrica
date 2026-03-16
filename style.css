@@ -1,0 +1,78 @@
+body {
+	margin: 0;
+	overflow: hidden;
+	background: #111;
+    font-family: Lexend;
+}
+span {
+	color: white
+}
+.txt1 {
+	font-size: 50px;
+}
+.txt2 {
+	font-style: italic;
+	font-size: 25px;
+}
+.txt3 {
+	font-style: italic;
+	font-size: 15px;
+}
+.content {
+	position: absolute;
+	text-align: center;
+
+	width: 100%;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.bottom {
+	position: absolute;
+	bottom: 0;
+	width: 100%
+}
+
+.symbol {
+	font-size: 100px;
+}
+
+.bar {
+	height: 24px;
+}
+#outerbar {
+	background: #ff000080;
+	height: 24px;
+	position: absolute;
+}
+#innerbar {
+	display: flex;
+	position: relative;
+	height: 100%;
+	align-content: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	font-size: 24px;
+}
+
+.entries {
+	position: relative;
+	bottom: 30px;
+}
+#lentry, #rentry, #next {
+	position: absolute;
+	width: 50%;
+	font-size: 25px;
+}
+#lentry {
+	text-align: left;
+}
+#rentry {
+	right: 0;
+	text-align: right;
+}
+#next {
+	right: 0;
+	bottom: 0;
+	text-align: right;
+}

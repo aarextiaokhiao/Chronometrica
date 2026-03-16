@@ -944,5 +944,5 @@ numarray = [["Inpredictafinity", "‡", "3.50"],
 ["GLOBALSTAR-LAXXINATIO", "𐃸𑖂", "21.825"],
 ["Quectant Retrofinite Chain", "𒿘𑖋(1)", "21.86"],
 ["THE FAUX AETERUANIELS", "[no symbol]", "21.885"],
-["Chronodynamis Gateway", "[untypable symbol]", "22.00", [["The Creation Altar", "✐⿈"], ["The Transperdinal", "⍾"]]]];
-console.log('numarray imported');
+["Chronodynamis Gateway", "[untypable symbol]", "22.00", [["The Creation Altar", "✐⿈"], ["The Transperdinal", "⍾"]]],
+["???", "[no symbol]", "23.00"]]
